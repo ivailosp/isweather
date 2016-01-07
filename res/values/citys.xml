@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="city_array">
+        <item>Sofia</item>
+        <item>Varna</item>
+        <item>Burgas</item>
+        <item>Pleven</item>
+        <item>Plovdiv</item>
+        <item>Blagoevgrad</item>
+        <item>Dimitrovgrad</item>
+        <item>Razgrad</item>
+		<item>Lovech</item>
+		<item>Ruse</item>
+		<item>Svilengrad</item>
+		<item>Gabrovo</item>
+    </string-array>
+</resources>
