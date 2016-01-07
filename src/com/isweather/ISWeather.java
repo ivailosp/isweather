@@ -166,24 +166,21 @@ public class ISWeather extends Activity {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void onDestroy() {
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
 		super.onDestroy();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
 	}
-	
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
 
-        sConn = new ServiceConnection() {
+	@Override
+	protected void onStart() {
+		super.onStart();
+		sConn = new ServiceConnection() {
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 messenger = null;
             }
- 
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 messenger = new Messenger(service);
@@ -191,6 +188,22 @@ public class ISWeather extends Activity {
             }
         };
         bindService(new Intent(this, WeatherService.class), sConn, Context.BIND_AUTO_CREATE);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (sConn != null && messenger != null) {
+			unbindService(sConn);
+		}
+		sConn = null;
+		messenger = null;
+	}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+		super.onCreate(savedInstanceState);
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("city-name"));
 		TableLayout table = new TableLayout(this);
 		table.setStretchAllColumns(true);
